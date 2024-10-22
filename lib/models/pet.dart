@@ -1,8 +1,8 @@
-import 'package:json_annotation/json_annotation.dart';
+// import 'package:json_annotation/json_annotation.dart';
 
 part 'pet.g.dart';
 
-@JsonSerializable()
+// @JsonSerializable()
 class Pet {
   int? id;
   String name;
