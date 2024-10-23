@@ -38,6 +38,8 @@ dependencies:
   dio: ^5.7.0
   image_picker: ^1.1.2
   build_runner: ^2.4.13
+  jwt_decode: ^0.3.1
+  shared_preferences: ^2.3.2
 
 dev_dependencies:
   flutter_test:
