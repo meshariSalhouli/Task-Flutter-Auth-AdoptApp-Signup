@@ -1,12 +1,12 @@
-import 'package:adopt_app/models/pet.dart';
-import 'package:adopt_app/providers/pets_provider.dart';
+import 'package:adopt_app/models/book.dart';
+import 'package:adopt_app/providers/book_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-class PetCard extends StatelessWidget {
-  final Pet pet;
-  const PetCard({Key? key, required this.pet}) : super(key: key);
+class BookCard extends StatelessWidget {
+  final Book book;
+  const BookCard({Key? key, required this.book}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,11 +14,16 @@ class PetCard extends StatelessWidget {
       child: Column(
         children: [
           Expanded(
-            child: Image.network(
-              pet.image,
-              fit: BoxFit.cover,
-              width: double.infinity,
-            ),
+            child: book.image != null
+                ? Image.network(
+                    book.image!,
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                  )
+                : Icon(
+                    Icons.book,
+                    size: 100,
+                  ),
           ),
           Expanded(
             child: Padding(
@@ -26,30 +31,21 @@ class PetCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(pet.name),
-                  Text("Age: ${pet.age}"),
-                  Text("Gender: ${pet.gender}"),
-                  ElevatedButton(
-                    onPressed: pet.adopted
-                        ? null
-                        : () {
-                            Provider.of<PetsProvider>(context, listen: false)
-                                .adoptPet(pet.id!);
-                          },
-                    child: const Text("Adopt"),
-                  ),
+                  Text(book.title),
+                  Text("author: ${book.author}"),
+                  Text("price: ${book.price}"),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       IconButton(
                           onPressed: () {
-                            GoRouter.of(context).push('/update/${pet.id}');
+                            GoRouter.of(context).push('/update/${book.id}');
                           },
                           icon: const Icon(Icons.edit)),
                       IconButton(
                           onPressed: () {
-                            Provider.of<PetsProvider>(context, listen: false)
-                                .deletePet(pet.id!);
+                            Provider.of<BooksProvider>(context, listen: false)
+                                .deleteBook(book.id!);
                           },
                           icon: const Icon(
                             Icons.delete,

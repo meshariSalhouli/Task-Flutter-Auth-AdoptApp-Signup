@@ -1,6 +1,6 @@
 import 'package:adopt_app/providers/auth_provider.dart';
-import 'package:adopt_app/providers/pets_provider.dart';
-import 'package:adopt_app/widgets/pet_card.dart';
+import 'package:adopt_app/providers/book_provider.dart';
+import 'package:adopt_app/widgets/book_card.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -12,7 +12,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Pet Adopt"),
+        title: const Text("book"),
       ),
       drawer: Drawer(
         child: FutureBuilder(
@@ -74,7 +74,7 @@ class HomePage extends StatelessWidget {
             ),
             FutureBuilder(
               future:
-                  Provider.of<PetsProvider>(context, listen: false).getPets(),
+                  Provider.of<BooksProvider>(context, listen: false).getBooks(),
               builder: (context, dataSnapshot) {
                 if (dataSnapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
@@ -86,8 +86,8 @@ class HomePage extends StatelessWidget {
                       child: Text('An error occurred'),
                     );
                   } else {
-                    return Consumer<PetsProvider>(
-                      builder: (context, petsProvider, child) =>
+                    return Consumer<BooksProvider>(
+                      builder: (context, booksProvider, child) =>
                           GridView.builder(
                               shrinkWrap: true,
                               gridDelegate:
@@ -99,9 +99,9 @@ class HomePage extends StatelessWidget {
                               ),
                               physics:
                                   const NeverScrollableScrollPhysics(), // <- Here
-                              itemCount: petsProvider.pets.length,
+                              itemCount: booksProvider.books.length,
                               itemBuilder: (context, index) =>
-                                  PetCard(pet: petsProvider.pets[index])),
+                                  BookCard(book: booksProvider.books[index])),
                     );
                   }
                 }

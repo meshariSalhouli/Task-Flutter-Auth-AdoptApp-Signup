@@ -1,15 +1,15 @@
-import 'package:adopt_app/models/pet.dart';
+import 'package:adopt_app/models/book.dart';
 import 'package:adopt_app/widgets/update_form.dart';
 import 'package:flutter/material.dart';
 
 class UpdatePage extends StatelessWidget {
-  final Pet pet;
-  const UpdatePage({Key? key, required this.pet}) : super(key: key);
+  final Book book;
+  const UpdatePage({Key? key, required this.book}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Update a pet"),
+        title: const Text("Update a book"),
       ),
       resizeToAvoidBottomInset: false,
       body: Padding(
@@ -17,8 +17,8 @@ class UpdatePage extends StatelessWidget {
         child: Column(
           children: [
             const Text("Fill those field to update a book"),
-            UpdatePetForm(
-              pet: pet,
+            UpdateBookForm(
+              book: book,
             ),
           ],
         ),

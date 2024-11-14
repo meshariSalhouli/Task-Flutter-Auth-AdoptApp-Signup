@@ -4,7 +4,7 @@ import 'package:adopt_app/pages/signin_page.dart';
 import 'package:adopt_app/pages/signup_page.dart';
 import 'package:adopt_app/pages/update_page.dart';
 import 'package:adopt_app/providers/auth_provider.dart';
-import 'package:adopt_app/providers/pets_provider.dart';
+import 'package:adopt_app/providers/book_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 void main() {
   runApp(MultiProvider(
     providers: [
-      ChangeNotifierProvider(create: (_) => PetsProvider()),
+      ChangeNotifierProvider(create: (_) => BooksProvider()),
       ChangeNotifierProvider(create: (_) => AuthProvider())
     ],
     child: MyApp(),
@@ -39,11 +39,12 @@ class MyApp extends StatelessWidget {
         builder: (context, state) => AddPage(),
       ),
       GoRoute(
-        path: '/update/:petId',
+        path: '/update/:bookId',
         builder: (context, state) {
-          final pet = Provider.of<PetsProvider>(context).pets.firstWhere(
-              (pet) => pet.id.toString() == (state.pathParameters['petId']!));
-          return UpdatePage(pet: pet);
+          final book = Provider.of<BooksProvider>(context).books.firstWhere(
+              (book) =>
+                  book.id.toString() == (state.pathParameters['bookId']!));
+          return UpdatePage(book: book);
         },
       ),
       GoRoute(

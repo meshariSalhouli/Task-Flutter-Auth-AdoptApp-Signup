@@ -1,15 +1,15 @@
 import 'dart:io';
 
-import 'package:adopt_app/models/pet.dart';
-import 'package:adopt_app/providers/pets_provider.dart';
+import 'package:adopt_app/models/book.dart';
+import 'package:adopt_app/providers/book_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
-class UpdatePetForm extends StatefulWidget {
-  final Pet pet;
-  UpdatePetForm({required this.pet});
+class UpdateBookForm extends StatefulWidget {
+  final Book book;
+  UpdateBookForm({required this.book});
   @override
   UpdateFormState createState() {
     return UpdateFormState();
@@ -17,18 +17,18 @@ class UpdatePetForm extends StatefulWidget {
 }
 
 // Create a corresponding State class. This class holds data related to the form.
-class UpdateFormState extends State<UpdatePetForm> {
+class UpdateFormState extends State<UpdateBookForm> {
   // Create a global key that uniquely identifies the Form widget
   // and allows validation of the form.
   final _formKey = GlobalKey<FormState>();
   var _image;
-  String name = "";
-  String gender = "";
-  int age = 0;
+  String title = "";
+  String author = "";
+  double price = 0;
   final _picker = ImagePicker();
   @override
   Widget build(BuildContext context) {
-    Pet pet = widget.pet;
+    Book book = widget.book;
     // Build a Form widget using the _formKey created above.
     return Form(
       key: _formKey,
@@ -37,9 +37,9 @@ class UpdateFormState extends State<UpdatePetForm> {
         children: <Widget>[
           TextFormField(
             decoration: const InputDecoration(
-              hintText: 'Pet name',
+              hintText: 'Book title',
             ),
-            initialValue: pet.name,
+            initialValue: book.title,
             validator: (value) {
               if (value!.isEmpty) {
                 return "please fill out this field";
@@ -48,14 +48,14 @@ class UpdateFormState extends State<UpdatePetForm> {
               }
             },
             onSaved: (value) {
-              name = value!;
+              title = value!;
             },
           ),
           TextFormField(
             decoration: const InputDecoration(
-              hintText: 'Pet Gender',
+              hintText: 'Book author',
             ),
-            initialValue: pet.gender,
+            initialValue: book.author,
             maxLines: null,
             validator: (value) {
               if (value!.isEmpty) {
@@ -65,24 +65,24 @@ class UpdateFormState extends State<UpdatePetForm> {
               }
             },
             onSaved: (value) {
-              gender = value!;
+              author = value!;
             },
           ),
           TextFormField(
             decoration: const InputDecoration(
-              hintText: 'Pet age',
+              hintText: 'book price',
             ),
-            initialValue: pet.age.toString(),
+            initialValue: book.price.toString(),
             validator: (value) {
               if (value == null) {
-                return "please enter an age";
-              } else if (int.tryParse(value) == null) {
+                return "please enter an price";
+              } else if (double.tryParse(value) == null) {
                 return "please enter a number";
               }
               return null;
             },
             onSaved: (value) {
-              age = int.parse(value!);
+              price = double.parse(value!);
             },
           ),
           Row(
@@ -130,17 +130,17 @@ class UpdateFormState extends State<UpdatePetForm> {
                 if (_formKey.currentState!.validate()) {
                   // If the form is valid, display a Snackbar.
                   _formKey.currentState!.save();
-                  Provider.of<PetsProvider>(context, listen: false).updatePet(
-                      Pet(
-                          id: pet.id,
-                          name: name,
-                          gender: gender,
+                  Provider.of<BooksProvider>(context, listen: false).updateBook(
+                      Book(
+                          id: book.id,
+                          title: title,
+                          author: author,
                           image: _image.path,
-                          age: age));
+                          price: price));
                   GoRouter.of(context).pop();
                 }
               },
-              child: const Text("Update Pet"),
+              child: const Text("Update Book"),
             ),
           )
         ],
